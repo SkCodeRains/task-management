@@ -1,0 +1,138 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url("bootstrap/dist/css/bootstrap.css");
+@import url("bootstrap-icons/font/bootstrap-icons.css");
+$bg: linear-gradient(45deg, #4E3143 0%, #4e3131 82%);
+
+:root {
+    --mat-form-field-error-text-color: #e4ff85;
+}
+
+html,
+body {
+    background: rgb(40, 0, 97);
+    background: $bg;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    color: white;
+
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+* {
+    font-size: 16px;
+    font-weight: 500;
+    color: white !important;
+    box-sizing: border-box;
+}
+
+.shadow-3d {
+    box-shadow: 5px 5px 10px 0px #00000080, -1px 0px 5px 0px #ffffff3e !important;
+    border-radius: 1rem !important;
+}
+
+.shadow-none {
+    box-shadow: none !important;
+}
+
+.mat-mdc-text-field-wrapper {
+    background-color: transparent !important;
+}
+
+
+
+input {
+
+    &::placeholder,
+    &::-webkit-input-placeholder {
+        color: #959595 !important;
+    }
+}
+
+section {
+    background: rgba(0, 0, 0, 0.01);
+    backdrop-filter: saturate(180%) blur(10px);
+
+    .form-panel {
+        border-radius: 1rem;
+        width: clamp(20rem, calc(100vw - 20px), 40vw);
+    }
+}
+
+.bulb {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: 0px 0px 2px 5px rgba(255, 255, 255, 0.795),
+        0px 0px 2px 10px rgba(255, 255, 255, 0.595),
+        0px 0px 2px 15px rgba(255, 255, 255, 0.495),
+        0px 0px 2px 20px rgba(255, 255, 255, 0.395),
+        0px 0px 2px 25px rgba(255, 255, 255, 0.195),
+        0px 0px 200px 150px rgba(255, 255, 255, 0.195);
+}
+
+.auth-panel>div {
+    min-height: 50%;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    /* color of the tracking area */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #011321;
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    // margin: 1rem;
+    // border: 10px solid white;
+}
+
+
+
+
+
+.cdk-overlay-container {
+    .cdk-overlay-backdrop {
+        backdrop-filter: blur(10px);
+    }
+
+    // @extend .shadow-3d;
+    background-color: transparent !important;
+
+    // background-color: red !important;
+    .mat-mdc-dialog-panel {
+        max-width: 100vw !important;
+        // width: 100vw;
+    }
+
+    .update-task {
+        width: clamp(25rem, 35vw, 50vw);
+        height: 50%;
+
+        .mat-mdc-dialog-container .mdc-dialog__surface {
+            box-shadow: none;
+            padding: 1rem;
+        }
+
+        form>div {
+            width: 100%;
+        }
+
+        .mat-mdc-dialog-surface {
+            background-color: transparent !important;
+        }
+    }
+
+
+}

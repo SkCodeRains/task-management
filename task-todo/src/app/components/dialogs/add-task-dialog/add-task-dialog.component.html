@@ -1,0 +1,33 @@
+<mat-dialog-content class="bg-transparent shadow-3d">
+    <div class="h-100">
+        <form class="d-flex justify-content-center position-relative align-items-center flex-column h-100"
+            (ngSubmit)="submitForm()">
+            <h2 class="mb-5">Create New Task</h2>
+            <div>
+                <mat-form-field class="w-100" [autofocus]="false">
+                    <mat-label>task</mat-label>
+                    <input matInput placeholder="pat@example.com" (focus)="false" class="text-white "
+                        [formControl]="controls.task_name" required>
+                    @if (controls.task_name.invalid) {
+                    <mat-error>{{errorMessageTaskName}}</mat-error>
+                    }
+                </mat-form-field>
+                <div class="d-flex align-items-center justify-content-between mt-5 text-uppercase">
+                    <button [mat-dialog-close]=""
+                        class="btn me-2 btn-submit btn-outline-warning shadow-3d text-uppercase w-100 ">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-submit btn-outline-warning shadow-3d text-uppercase w-100 "
+                        [disabled]="isFormInvalid">
+                        Create
+                    </button>
+                </div>
+                <!-- <div class="example-button-row position-absolute bottom-0 m-4 end-0 me-5">
+                    <button mat-flat-button>Basic</button>
+                    <button mat-flat-button color="primary">Primary</button>
+                    <button mat-flat-button color="accent">Accent</button> 
+                </div>  -->
+            </div>
+        </form>
+    </div>
+</mat-dialog-content>

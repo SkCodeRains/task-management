@@ -1,0 +1,129 @@
+::ng-deep {
+
+    .table-container { 
+        height: calc(100vh - 280px);
+        overflow-y: auto;
+    }
+
+    th {
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(5px);
+    }
+
+    /* JUST COMMON TABLE STYLES... */
+    table {
+        border-collapse: collapse;
+        width: 50%;
+    }
+
+    th,
+    td {
+        background: #fff;
+        padding: 8px 16px;
+    }
+
+    .mat-mdc-icon-button {
+        &:not([disabled]) {
+            .mat-mdc-paginator-icon {
+                fill: white !important;
+            }
+        }
+    }
+
+    td.mat-cell {
+        /* row padding */
+        padding: 16px 0;
+        /* row border */
+        border-bottom: 1px solid #ffa600;
+        border-top: 1px solid #ffa600;
+    }
+
+    td.mat-cell:first-child {
+        /* row border */
+        border-left: 1px solid #ffa600;
+    }
+
+    td.mat-cell:last-child {
+        /* row border */
+        border-right: 1px solid #ffa600;
+    }
+
+    table {
+        /* row spacing / margin */
+        border-spacing: 0 8px !important;
+    }
+
+    .mat-mdc-select-panel {
+        background-color: transparent !important;
+    }
+
+    .mat-mdc-option-active {
+        * {
+            color: white !important;
+            scale: 1.2;
+            font-weight: 900;
+        }
+    }
+
+    .mat-mdc-paginator-container {
+        flex-wrap: nowrap !important;
+        justify-content: start !important;
+
+
+        .mat-mdc-paginator-range-actions,
+        .mat-mdc-paginator-page-size-label {
+            min-width: max-content
+        }
+    }
+
+
+}
+
+input {
+    outline: none;
+}
+
+.cdk-cell {
+    width: 50%;
+    min-width: max-content;
+}
+
+.mat-column-action {
+    max-width: 6% !important;
+
+}
+
+
+
+section {
+    display: table;
+}
+
+.example-label {
+    display: table-cell;
+    font-size: 14px;
+    margin-left: 8px;
+    min-width: 120px;
+}
+
+.example-button-row {
+    display: table-cell;
+    max-width: 600px;
+}
+
+.example-button-row .mat-mdc-button-base {
+    margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.example-button-container {
+    display: flex;
+    justify-content: center;
+    width: 120px;
+}

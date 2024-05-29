@@ -1,0 +1,41 @@
+<section class="auth-panel vh-100 vw-100 d-flex " [@fadeAnimation]="showElement ? 'visible' : 'void'">
+   
+    <div class="m-auto shadow-3d d-flex flex-column form-panel py-3 position-relative overflow-hidden">
+        <div class="bulb bg-white position-absolute top-0 start-0  ">
+
+        </div>
+        <div class="p-4 text-center">
+            <span class="h1 header fw-bolder text-uppercase bi bi-key"> W e l c o m e </span>
+        </div>
+        <form action="localhost:3000/Sign In" method="POST" class=" w-100 m-auto  px-4 w-100 d-flex flex-column"
+            (ngSubmit)="submitForm()" >
+            <mat-form-field>
+                <mat-label>Enter your email</mat-label>
+                <input matInput placeholder="pat@example.com" class="text-white" [formControl]="controls.email"
+                    (blur)="updateErrorMessage()" required>
+                @if (controls.email.invalid) {
+                <mat-error>{{errorMessageEmail}}</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Enter your password</mat-label>
+                <input type="password" matInput class="text-white" [formControl]="controls.password"
+                    (blur)="updateErrorMessage()" required>
+                @if (controls.password.invalid) {
+                <mat-error>{{errorMessagePass}}</mat-error>
+                }
+            </mat-form-field>
+            <div class="d-flex align-items-center justify-content-between mt-5 text-uppercase">
+                <button type="submit" class="btn btn-submit btn-outline-warning shadow-3d text-uppercase w-100 "
+                    [disabled]="isFormInvalid">
+                    Sign In
+                </button>
+                <button (click)="navigateToSignUp($event)"
+                    class=" bg-transparent border-0 mt-3 text-white w-75 text-uppercase">
+                    Sign Up
+                    <span class="bi ms-2 bi-arrow-right"></span>
+                </button>
+            </div>
+        </form>
+    </div>
+</section>

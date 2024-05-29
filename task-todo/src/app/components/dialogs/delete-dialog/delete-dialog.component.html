@@ -1,0 +1,27 @@
+<mat-dialog-content class="bg-transparent shadow-3d">
+    <div class="d-flex h-100 justify-content-center align-items-center">
+        <div class="">
+
+            <div>
+                <h2>Are you sure you want to delete the task it cannot be revert back ! </h2>
+            </div>
+            <div>
+                <div class="d-flex align-items-center justify-content-between mt-5 text-uppercase">
+                    <button [mat-dialog-close]=""
+                        class="btn me-2 btn-submit btn-outline-warning shadow-3d text-uppercase w-100 ">
+                        Close
+                    </button>
+                    <button type="submit" [mat-dialog-close]="{delete:true}"
+                        class="btn btn-submit btn-outline-warning shadow-3d text-uppercase w-100 ">
+                        Delete
+                    </button>
+                </div>
+                <!-- <div class="example-button-row position-absolute bottom-0 m-4 end-0 me-5">
+                <button mat-flat-button>Basic</button>
+                <button mat-flat-button color="primary">Primary</button>
+                <button mat-flat-button color="accent">Accent</button> 
+            </div>  -->
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
