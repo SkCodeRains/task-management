@@ -10,12 +10,12 @@ const WHITELIST = [
 const auth = (req, res, next) => {
     try {
         let token = req.headers.authorization;
-        if (token) { 
+        if (token) {
             // token = token.split(" ")[0]; 
-            let user = jwt.verify(token, SECRET_KEY);  
+            let user = jwt.verify(token, process.env.SECRET_KEY);
             req.userId = user.id;
             next();
-        } else { 
+        } else {
             if (WHITELIST.indexOf(req.url) !== -1) {
                 next();
             } else {
