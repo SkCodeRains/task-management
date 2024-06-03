@@ -1,9 +1,6 @@
-<section class="vh-100 d-flex vw-100 position-relative flex-column align-items-center">
-    <app-navbar />
-
-
+<section class="center flex-column ">
     <div class="mx-lg-5 mx-2 shadow-3d task-table " style="max-width: 1000px;">
-        <app-table [dataSource]="tasks"></app-table>
+        <app-table [dataSource]="tasks" (refresh)="fetchData()"></app-table>
     </div>
     <div #dialogContainer></div>
 </section>

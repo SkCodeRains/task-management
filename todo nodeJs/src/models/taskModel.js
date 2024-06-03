@@ -9,19 +9,22 @@ const taskModel = mongoose.Schema(
         task_name: {
             type: String,
             required: true,
-            unique: true
         },
         status: {
             type: Number,
             default: 0,
-            required: true
         },
         description: {
             type: String,
         },
         picture: {
             type: String
-        }
+        },
+        startDate: {
+            type: Date,
+            default: Date.now()
+        },
+        endDate: Date,
     },
     {
         timestamp: true,

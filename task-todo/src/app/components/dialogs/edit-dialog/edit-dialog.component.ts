@@ -13,6 +13,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { TasksService } from '../../../services/tasks.service';
 import { CommonModule } from '@angular/common';
+import { Itask } from '../../interfaces/interface';
 @Component({
   selector: 'app-edit-dialog',
   standalone: true,
@@ -34,7 +35,9 @@ import { CommonModule } from '@angular/common';
 export class EditDialogComponent {
 
   errorMessageEmail: any;
-  isFormInvalid: any;
+  get isFormInvalid() {    
+    return this.form.invalid || this.form.untouched
+  }
 
 
   get status() {
@@ -43,7 +46,7 @@ export class EditDialogComponent {
 
   private form;
 
-  get controls() {
+  get controls(): any {
     return this.form.controls;
   }
   get formValues() {
@@ -54,19 +57,16 @@ export class EditDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private taskService: TasksService,
     private dialogRef: MatDialogRef<EditDialogComponent>) {
-    this.form = new FormGroup({
-      task_name: new FormControl(data.task_name),
-      status: new FormControl(data.status as FloatLabelType)
-    });
+    this.form = new FormGroup(this.getControls(data));
   }
- 
-  submitForm() {
-    console.log(this.form.value);
+  getControls(data: Itask) {
+    let control: any = {}
+    Object.keys(data).forEach((key) => {
+      control[key] = new FormControl((<any>data)[key]);
+    })
+    return control;
+  }
+  submitForm() { 
     this.dialogRef.close();
-
-  }
-
-  navigateToSignUp($event: MouseEvent) {
-    throw new Error('Method not implemented.');
   }
 }

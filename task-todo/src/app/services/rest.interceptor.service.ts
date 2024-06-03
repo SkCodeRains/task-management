@@ -1,35 +1,38 @@
 import { HttpEvent, HttpInterceptorFn, HttpRequest, HttpHandlerFn } from '@angular/common/http';
-import { EventEmitter, Injectable, Signal, signal } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { EventEmitter, Injectable, inject, signal } from '@angular/core';
+import { Observable, catchError, finalize, throwError } from 'rxjs';
+import { TasksService } from './tasks.service';
 
 
 const reLoginEvent = new EventEmitter<void>(); // Define event type (optional)
 const getAuthenticationToken = signal("");
 
 export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> => {
+    const taskService: TasksService = inject(TasksService);
     const authToken = getAuthenticationToken(); // Replace with your actual token retrieval logic 
 
-    const headers: any = {
-        'Content-Type': 'application/json',
-        'Accept': "*/*"
-    }
+    const headers: any = {}
     if (authToken.length > 0) {
         headers.Authorization = authToken;
     }
     const authReq = req.clone({
         setHeaders: headers
     });
+    taskService.showLoader();
     // return// Chain the interceptor to handle successful responses as well as errors
     return next(authReq).pipe(
         catchError(error => {
-            console.error('API Error:', error); // Log the error details to the console
+            taskService.toastContainer.error(error.error.message) // Log the error details to the console
             // Optionally handle specific error types here (e.g., authentication failures, network issues)
-            if (error.statusText === "Unauthorized") {
+            if (error.statusText === "Unauthorized" || error) {
                 reLoginEvent.emit();
             }
 
             // Return an appropriate error response to the caller
             return throwError(() => error);
+        }),
+        finalize(() => {
+            taskService.hideLoader();
         })
     );;
 };

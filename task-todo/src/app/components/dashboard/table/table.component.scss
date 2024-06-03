@@ -1,20 +1,20 @@
 ::ng-deep {
 
-    .table-container { 
-        height: calc(100vh - 280px);
+    .table-container {
+        height: calc(100vh - 280px); 
         overflow-y: auto;
     }
 
     th {
         position: sticky;
         top: 0;
-        backdrop-filter: blur(5px);
+        backdrop-filter: blur(10px);
     }
 
     /* JUST COMMON TABLE STYLES... */
     table {
         border-collapse: collapse;
-        width: 50%;
+        width: 0%;
     }
 
     th,
@@ -85,14 +85,16 @@ input {
 }
 
 .cdk-cell {
+    // width: max-content;
+    min-width: min-content;
+}
+
+.cdk-column-task_name,
+.cdk-column-description{
     width: 50%;
     min-width: max-content;
 }
 
-.mat-column-action {
-    max-width: 6% !important;
-
-}
 
 
 

@@ -1,7 +1,36 @@
-<nav class="navbar navbar-expand-lg navbar-dark vw-100  top-0 mb-3">
-    <div class="d-flex justify-content-between w-100 mx-2">
-        <span class="navbar-brand h1 w-100   ms-lg-3 ms-2 p">Manage Task's</span>
-        <button class="btn d-flex" (click)="logout()"> <mat-icon>lock</mat-icon> <span class="h4">Logout</span> </button>
-    </div>
+<nav class="navbar vw-100  top-0 mb-3 align-items-center p-2">
+    <div class="d-flex justify-content-between w-100 shadow-3d">
+        <div class="center gap-lg-2  btn ms-lg-3 border-0 border-bottom border-3">
+            <mat-icon>checklist</mat-icon>
+            <span class="ms-2  text-">Task World</span>
+        </div>
+        <div class="flex-fill "></div>
 
+        <button (click)="gotoProfile()" [matTooltip]="'Profile'"
+            class="profile-picture-container shadow-3d my-0 py-1 btn justify-content-center d-flex align-items-center   btn-outline-warning">
+            <img class="profile-picture" [src]="profilePicture||'assets/user.png'" alt="">
+            <span class="ms-2 align-baseline ">{{username}}</span>
+        </button>
+        <div class="center mx-2 gap-2 d-lg-flex d-none ">
+
+            <button class="btn  center h-100 py-2" (click)="logout()">
+                <mat-icon>logout</mat-icon> <span class="ms">Logout</span>
+            </button>
+        </div>
+
+        <div class="center gap-2  d-lg-none ">
+            <button mat-icon-button [matMenuTriggerFor]="menu" class="btn">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu class="shadow-3d " #menu="matMenu">
+                <!-- <button mat-menu-item (click)="gotoProfile()" class="profile-picture-container my-0 py-1 btn center  ">
+                    <img class="profile-picture" [src]="profilePicture||'assets/user.png'" alt="">
+                    <span class="ms-2 align-baseline ">Profile</span>
+                </button> -->
+                <button mat-menu-item class="btn my-0 py-1 h-100 py-2" mat-menu-item (click)="logout()">
+                    <mat-icon class="ms-2">logout</mat-icon> <span>Logout</span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
 </nav>

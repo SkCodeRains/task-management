@@ -5,11 +5,15 @@ const userRouter = require('./routes/userRoutes');
 const { default: mongoose } = require('mongoose');
 const auth = require('./middleware/auth');
 const taskRouter = require('./routes/taskRoutes');
+const fileUpload = require('express-fileupload');
 
 
 app.use(express.json());
+// Middleware to handle multipart/form-data
+app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload());
 
-const whitelist = ['http://localhost:4200', "http://localhost:3000", "http://192.168.253.18:4200"]; // Array of allowed origins
+const whitelist = ['http://localhost:4200', "http://localhost:3000", 'http://192.168.180.12:4200']; // Array of allowed origins
 const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
@@ -35,6 +39,6 @@ app.get("/test.ss", (req, res) => {
 
 
 
-mongoose.connect("mongodb://localhost:27017/tasksDb").then(() => {
+mongoose.connect("mongodb://localhost:27017/tasks_management_db").then(() => {
     app.listen(3000);
 });

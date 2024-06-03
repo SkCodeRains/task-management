@@ -25,14 +25,18 @@ const createTask = async (req, res) => {
             await user.save();
             response.success = true;
             response.task = task;
+            res.send(response);
+        } else {
+            return res.status(401).send({
+                status: false,
+                message: "User Not Exists"
+            })
         }
-        res.send(response);
     } catch (error) {
         if (error.code === 11000) {
             response.message = "Dublicate Task Name"
             res.send(response);
         }
-        res.send(response);
     }
 }
 
@@ -68,8 +72,8 @@ const updateTask = async (req, res) => {
         success: false,
     };
     try {
-        const { _id, task_name, status } = req.body;
-        const updateTask = await taskModel.findOneAndUpdate(_id, { task_name: task_name, status: status });
+        const { _id, task_name, status, description } = req.body;
+        const updateTask = await taskModel.findOneAndUpdate({ _id: _id }, { task_name: task_name, status: status, description: description });
         if (updateTask) {
             response.success = true
             response.task = req.body;

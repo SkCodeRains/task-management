@@ -51,8 +51,8 @@ export class LoginComponent {
   }
 
 
-  errorMessagePass: string = "Please Enter Valid Email Address";
-  errorMessageEmail: string = "Please Enter Valid Password Followed By at least one digit and Uppercase Character.";
+  errorMessageEmail: string = "";
+  errorMessagePass: string = "";
 
   constructor(protected rest: RestService, protected router: Router, private service: TasksService) {
     let subs = merge(this.form.statusChanges, this.form.valueChanges)
@@ -78,7 +78,9 @@ export class LoginComponent {
     if (this.controls.password.hasError('required')) {
       this.errorMessagePass = 'You must enter a value';
     } else if (this.controls.password.hasError("pattern")) {
-      this.errorMessagePass = 'Please Enter Valid Password Followed By at least one digit and Uppercase Character.';
+      this.errorMessagePass = `At least 8 characters (One uppercase letter (A-Z)),
+      (One digit (0-9)),
+      (One special character)`;
     } else {
       this.errorMessagePass = '';
     }
@@ -90,13 +92,6 @@ export class LoginComponent {
       next: (res) => {
         this.service.user = res;
         this.router.navigate(["dashboard"], { skipLocationChange: true });
-        this.service.token.set(res.token);
-      },
-      error: (error) => {
-        console.log(error);
-        if (error.error.message === "User Not Exists") {
-          this.service.showMessage(error.error.message, 2000);
-        }
       },
       complete: () => {
         subs.unsubscribe();

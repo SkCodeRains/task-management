@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output, ViewChild, signal } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -13,6 +13,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DeleteDialogComponent } from '../../dialogs/delete-dialog/delete-dialog.component';
 import { EditDialogComponent } from '../../dialogs/edit-dialog/edit-dialog.component';
 import { AddtaskDialogComponent } from '../../dialogs/add-task-dialog/add-task-dialog.component';
+import { fromEvent, interval, throttle } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 /**
  * @title Styling columns using their auto-generated column names
  */
@@ -32,12 +34,14 @@ import { AddtaskDialogComponent } from '../../dialogs/add-task-dialog/add-task-d
   styleUrl: './table.component.scss'
 })
 export class TableComponent {
-  displayedColumns: string[] = ['task_name', 'status', 'action'];
+
+  displayedColumns: string[] = ['task_name', 'description', 'status', 'action'];
 
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   private _dataSource!: MatTableDataSource<Itask>;
+  @Output() refresh = new EventEmitter();
   @Input()
   public set dataSource(value: Itask[]) {
     if (value) {
@@ -66,15 +70,38 @@ export class TableComponent {
     return this.taskService.status;
   }
 
-  constructor(private taskService: TasksService, private dialog: MatDialog, private rest: RestService) { }
 
-
-  setPageSizeOptions(setPageSizeOptionsInput: string) {
-    if (setPageSizeOptionsInput) {
-      this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
-    }
+  constructor(private taskService: TasksService, private dialog: MatDialog, private rest: RestService) {
+    const resizeObservable = fromEvent(window, 'resize');
+    resizeObservable.pipe(takeUntilDestroyed(), throttle(() => interval(500))
+    ).subscribe({
+      next: this.orientationChange.bind(this),
+    });
+    this.orientationChange();
   }
 
+  refreshData() {
+    this.refresh.emit();
+  }
+
+
+  orientationChange() {
+    setTimeout(() => {
+      if (window.innerWidth < 1000) {
+        if (this.displayedColumns.indexOf("description") !== -1) {
+          this.displayedColumns.splice(1, 1);
+        }
+      } else {
+        if (this.displayedColumns.indexOf("description") === -1) {
+          this.displayedColumns = [
+            ...this.displayedColumns.slice(0, 1),
+            "description",
+            ...this.displayedColumns.slice(1)
+          ];
+        }
+      }
+    }, 500);
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -107,14 +134,14 @@ export class TableComponent {
   updateTask(element: Itask, res: Itask) {
     let subs = this.rest.updateTask(res).subscribe({
       next: (res) => {
-        console.log(res);
         if (res.success) {
-          element.task_name = res.task.task_name;
-          element.status = res.task.status;
+          for (const key in res.task) {
+            if (Object.prototype.hasOwnProperty.call(res.task, key)) {
+              (<any>element)[key] = res.task[key];
+            }
+          }
+          this.taskService.toastContainer.success("Task Updated Successfully!.");
         }
-      },
-      error: (error) => {
-        console.log(error);
       },
       complete: () => {
         subs.unsubscribe();
@@ -148,6 +175,7 @@ export class TableComponent {
           if (index !== -1) {
             this._dataSource.data.splice(index, 1);
             this._dataSource.data = [...this._dataSource.data]; // Trigger change detection (optional)
+            this.taskService.toastContainer.success("Task Deleted Successfully!.")
           }
         }
       },
@@ -179,9 +207,10 @@ export class TableComponent {
     let subs = this.rest.createTask(task).subscribe({
       next: (res) => {
         if (res.success) {
-          this.addNewtask(res.task);
+          this._dataSource.data = [...this._dataSource.data, res.task];
+          this.taskService.toastContainer.success("Task Created Successfully!.");
         } else if (res.message) {
-          this.taskService.showMessage(res.message);
+          this.taskService.toastContainer.warning(res.message);
         }
       },
       complete: () => {
@@ -189,8 +218,5 @@ export class TableComponent {
       }
     })
 
-  }
-  addNewtask(task: any) {
-    this._dataSource.data = [...this._dataSource.data, task];
   }
 }

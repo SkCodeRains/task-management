@@ -1,4 +1,4 @@
-<section class="auth-panel vh-100 vw-100 d-flex visible position-relative">
+<section class="auth-panel full-page center">
 
     <div class="m-auto shadow-3d d-flex flex-column form-panel py-3 position-relative overflow-hidden">
         <div class="bulb bg-white position-absolute top-0 start-0  ">
@@ -7,12 +7,11 @@
         <div class="p-4 text-center">
             <span class="h1 header fw-bolder text-uppercase bi bi-key">S i g n u p</span>
         </div>
-        <form action="localhost:3000/login" method="POST" class=" w-100 m-auto  px-4 w-100 d-flex flex-column"
-            (ngSubmit)="submitForm()" >
+        <form class=" w-100 m-auto  px-4 w-100 d-flex flex-column" (ngSubmit)="submitForm()" autocomplete="off">
             <mat-form-field>
                 <mat-label>Enter your Full Name</mat-label>
                 <input matInput placeholder="Code Rains" class="text-white" [formControl]="controls.username"
-                    (blur)="updateErrorMessage()" required>
+                    (keyup)="updateErrorMessage()" required>
                 @if (controls.username.invalid) {
                 <mat-error>{{errorMessageUsername}}</mat-error>
                 }
@@ -21,7 +20,7 @@
             <mat-form-field>
                 <mat-label>Enter your email</mat-label>
                 <input matInput placeholder="pat@example.com" class="text-white" [formControl]="controls.email"
-                    (blur)="updateErrorMessage()" required>
+                    (keyup)="updateErrorMessage()" required>
                 @if (controls.email.invalid) {
                 <mat-error>{{errorMessageEmail}}</mat-error>
                 }
@@ -30,7 +29,7 @@
             <mat-form-field>
                 <mat-label>Enter New password</mat-label>
                 <input type="password" matInput class="text-white" [formControl]="controls.password"
-                    (blur)="updateErrorMessage()" required>
+                    (keyup)="updateErrorMessage()" required>
                 @if (controls.password.invalid) {
                 <mat-error>{{errorMessagePass}}</mat-error>
                 }
@@ -39,12 +38,12 @@
             <mat-form-field>
                 <mat-label>Confirm password</mat-label>
                 <input type="password" matInput class="text-white" [formControl]="controls.confPassword"
-                    (blur)="updateErrorMessage()" required>
+                    (keyup)="updateErrorMessage()" required>
                 @if (controls.confPassword.invalid) {
                 <mat-error>{{errorMessageConfPass}}</mat-error>
                 }
             </mat-form-field>
-            
+
             <div class="d-flex align-items-center justify-content-between mt-5 text-uppercase">
                 <button type="submit" class="btn btn-submit btn-outline-warning shadow-3d text-uppercase w-100 "
                     [disabled]="isFormInvalid">

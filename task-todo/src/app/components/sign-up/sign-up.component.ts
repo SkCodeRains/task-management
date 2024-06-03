@@ -19,7 +19,7 @@ export class SignUpComponent implements AfterViewInit {
 
   private _form = new FormGroup(
     {
-      username: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z]+ [A-Za-z\s]*$')]),
+      username: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$')]),
       confPassword: new FormControl('', [Validators.required, Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$')]),
@@ -55,6 +55,17 @@ export class SignUpComponent implements AfterViewInit {
     }, 300);
   }
   updateErrorMessage() {
+
+
+    if (this.controls.username.hasError('required')) {
+      this.errorMessageUsername = 'You must enter a value';
+    } else if (this.controls.username.hasError("pattern")) {
+      this.errorMessageUsername = 'Digits Not Allowed.';
+    } else {
+      this.errorMessageUsername = '';
+    }
+
+
     if (this.controls.email.hasError('required')) {
       this.errorMessageEmail = 'You must enter a value';
     } else if (this.controls.email.hasError('email')) {
@@ -74,20 +85,13 @@ export class SignUpComponent implements AfterViewInit {
 
     if (this.controls.confPassword.hasError('required')) {
       this.errorMessageConfPass = 'You must enter a value';
-    } else if (this.controls.email.hasError('pattern')) {
+    } else if (this.controls.confPassword.hasError('pattern')) {
       this.errorMessageConfPass = 'Please Enter Valid Confirm Password';
     } else if (this.controls.confPassword.value !== this.controls.password.value && this.controls.password.valid) {
       this.errorMessageConfPass = "Password Did Not Match";
+      this.controls.confPassword.setErrors({ nomatch: true })
     } else {
       this.errorMessageConfPass = '';
-    }
-
-    if (this.controls.username.hasError('required')) {
-      this.errorMessageUsername = 'You must enter a value';
-    } else if (this.controls.password.hasError("pattern")) {
-      this.errorMessagePass = 'Please Enter Valid Username.';
-    } else {
-      this.errorMessagePass = '';
     }
 
   }
@@ -98,7 +102,6 @@ export class SignUpComponent implements AfterViewInit {
   submitForm() {
     let subs = this.rest.signUp(this._form.value).subscribe({
       next: (res) => {
-        this.service.token.set(res.token);
         this.service.user = res;
         this.router.navigate(["dashboard"], { skipLocationChange: true });
       },

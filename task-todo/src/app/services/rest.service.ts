@@ -8,7 +8,7 @@ import { Itask } from '../components/interfaces/interface';
 })
 export class RestService {
 
-  URL = "http://192.168.253.18:3000/"
+  URL = "http://localhost:3000/"
   headers = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -30,12 +30,15 @@ export class RestService {
   deleteTask(task: Itask): Observable<any> {
     return this.http.post<any>(`${this.URL}deleteTask.ss`, task);
   }
-  
+
   createTask(task: Itask): Observable<any> {
     return this.http.post(`${this.URL}createTask.ss`, task);
   }
 
   updateTask(task: Itask): Observable<any> {
     return this.http.post<any>(`${this.URL}updateTask.ss`, task);
+  }
+  updateProfile(formData: FormData|any): Observable<any> {
+    return this.http.post<any>(`${this.URL}updateProfile.ss`, formData);
   }
 }

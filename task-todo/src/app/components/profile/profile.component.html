@@ -1,0 +1,83 @@
+<section class="d-flex h-100 justify-content-center align-items-center">
+    <div class="m-auto shadow-3d d-flex flex-column form-panel py-3 position-relative overflow-hidden ">
+
+
+        <form class=" w-100 m-auto  px-4 w-100 d-flex flex-column">
+            <div class="center flex-column position-relative">
+                @if (disabled) {
+                <button class="btn position-absolute top-0 end-0 " (click)="disabled=false" matTooltip="Enable editing">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                }
+                <div class="profile-picture">
+                    <img [src]="selectedFile||'assets/user.png'" (click)="fileInput.click()">
+                </div>
+                <mat-label class="my-3">Profile Picture</mat-label>
+                <input type="file" #fileInput name="picture" hidden (change)="onFileSelected($event)"
+                    [disabled]="controls.picture.disabled">
+            </div>
+
+            <mat-form-field>
+                <mat-label>User Name</mat-label>
+                <input type="text" matInput class="text-white" placeholder="Code Rains" name="username" pola
+                    [formControl]="controls.username" (keyup)="updateErrorMessage()" required>
+                @if (controls.username.invalid) {
+                <mat-error>{{errorMessageUsername}}</mat-error>
+                }
+            </mat-form-field>
+
+
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="pat@example.com" name="email" class="text-white"
+                    [formControl]="controls.email" (keyup)="updateErrorMessage()" required>
+                @if (controls.email.invalid) {
+                <mat-error>{{errorMessageEmail}}</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field class="example-form-field bg-transparent">
+                <mat-label>DOB *</mat-label>
+                <input [formControl]="controls.dob" matInput placeholder="MM/DD/YYYY" [matDatepicker]="datepicker">
+                <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                <mat-datepicker #datepicker [yPosition]="'above'" xPosition="start" class="bg-transparent"
+                    [panelClass]="'shadow-3d'">
+                    <mat-datepicker-actions>
+
+                        <button mat-button matDatepickerCancel class="btn">Cancel</button>
+                        <button mat-raised-button color="primary" matDatepickerApply class="btn">Apply</button>
+                    </mat-datepicker-actions>
+                </mat-datepicker>
+            </mat-form-field>
+
+
+            <mat-radio-group aria-label="Select an option" [formControl]="controls.gender">
+                <label>Gender : </label>
+                <mat-radio-button value="male">Male</mat-radio-button>
+                <mat-radio-button value="female">Female</mat-radio-button>
+                <mat-radio-button value="other">Other</mat-radio-button>
+            </mat-radio-group>
+
+            <mat-form-field>
+                <mat-label>Address *</mat-label>
+
+
+                <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="5" [formControl]="controls.address"></textarea>
+            </mat-form-field>
+
+
+            <div class="d-flex align-items-center justify-content-between mt-5 text-uppercase">
+                <button [mat-dialog-close]=""
+                    class="btn me-2 btn-submit btn-outline-warning shadow-3d text-uppercase w-100 ">
+                    Close
+                </button>
+                <button type="submit" (click)="updateProfile($event)" [disabled]="!isInvalid && this.form.untouched"
+                    class="btn btn-submit btn-outline-warning shadow-3d text-uppercase w-100 ">
+                    Update
+                </button>
+            </div>
+
+
+        </form>
+    </div>
+</section>

@@ -5,12 +5,17 @@
             <h2 class="mb-5">Create New Task</h2>
             <div>
                 <mat-form-field class="w-100" [autofocus]="false">
-                    <mat-label>task</mat-label>
+                    <mat-label>Task</mat-label>
                     <input matInput placeholder="pat@example.com" (focus)="false" class="text-white "
                         [formControl]="controls.task_name" required>
                     @if (controls.task_name.invalid) {
-                    <mat-error>{{errorMessageTaskName}}</mat-error>
+                    <mat-error>You must enter a value</mat-error>
                     }
+                </mat-form-field>
+                <mat-form-field class="w-100" [autofocus]="false">
+                    <mat-label>Description</mat-label>
+                    <textarea textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" [formControl]="controls.description"></textarea>
                 </mat-form-field>
                 <div class="d-flex align-items-center justify-content-between mt-5 text-uppercase">
                     <button [mat-dialog-close]=""
