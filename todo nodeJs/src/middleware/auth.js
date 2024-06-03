@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken")
+require("dotenv");
 
 
 const SECRET_KEY = "coderains@srt";
