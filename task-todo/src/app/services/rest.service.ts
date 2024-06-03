@@ -8,7 +8,8 @@ import { Itask } from '../components/interfaces/interface';
 })
 export class RestService {
 
-  URL = "http://localhost:3000/"
+  // URL = "http://localhost:3000/"
+  URL = "https://task-management-shb7.vercel.app/"
   headers = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'

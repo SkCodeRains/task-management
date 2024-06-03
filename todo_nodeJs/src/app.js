@@ -8,6 +8,9 @@ const auth = require('./middleware/auth');
 const taskRouter = require('./routes/taskRoutes');
 const fileUpload = require('express-fileupload');
 
+app.get("/",(req,res)=>{
+    res.send("Hello Dear How Are YOu ")
+})
 
 app.use(express.json());
 // Middleware to handle multipart/form-data
