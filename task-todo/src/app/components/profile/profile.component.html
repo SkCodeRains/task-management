@@ -2,10 +2,10 @@
     <div class="m-auto shadow-3d d-flex flex-column form-panel py-3 position-relative overflow-hidden ">
 
 
-        <form class=" w-100 m-auto  px-4 w-100 d-flex flex-column">
+        <form class=" w-100 m-auto  px-4 w-100 d-flex flex-column" enctype="multipart/form-data">
             <div class="center flex-column position-relative">
                 @if (disabled) {
-                <button class="btn position-absolute top-0 end-0 " (click)="disabled=false" matTooltip="Enable editing">
+                <button class="btn position-absolute top-0 end-0" (click)="disabled=false" matTooltip="Enable editing">
                     <mat-icon>edit</mat-icon>
                 </button>
                 }
@@ -27,14 +27,6 @@
             </mat-form-field>
 
 
-            <mat-form-field>
-                <mat-label>Email</mat-label>
-                <input matInput placeholder="pat@example.com" name="email" class="text-white"
-                    [formControl]="controls.email" (keyup)="updateErrorMessage()" required>
-                @if (controls.email.invalid) {
-                <mat-error>{{errorMessageEmail}}</mat-error>
-                }
-            </mat-form-field>
             <mat-form-field class="example-form-field bg-transparent">
                 <mat-label>DOB *</mat-label>
                 <input [formControl]="controls.dob" matInput placeholder="MM/DD/YYYY" [matDatepicker]="datepicker">
@@ -58,7 +50,7 @@
             </mat-radio-group>
 
             <mat-form-field>
-                <mat-label>Address *</mat-label>
+                <mat-label>Address</mat-label>
 
 
                 <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"

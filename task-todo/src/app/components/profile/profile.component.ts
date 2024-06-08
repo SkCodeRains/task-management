@@ -31,7 +31,6 @@ import { EditProfileDailogComponent } from '../dialogs/edit-profile-dailog/edit-
 })
 export class ProfileComponent {
 
-  errorMessageEmail: any;
   errorMessageUsername: any;
   selectedFile!: String | undefined;
   get disabled() {
@@ -58,7 +57,6 @@ export class ProfileComponent {
   constructor(private taskService: TasksService, private rest: RestService, private dialog: MatDialogRef<EditProfileDailogComponent>) {
     this.form = new FormGroup({
       username: new FormControl(this.user.username, [Validators.required, Validators.pattern('^[A-Za-z]+ [A-Za-z\s]*$')]),
-      email: new FormControl(this.user.email, [Validators.required, Validators.email]),
       dob: new FormControl(this.user.dob || ""),
       picture: new FormControl(this.file),
       gender: new FormControl(this.user.gender || ""),
@@ -81,7 +79,7 @@ export class ProfileComponent {
           } else if (control.value instanceof File) {
             formData.append(key, control.value, control.value.name);
           } else {
-            formData.append(key, control.value);
+            formData.append(key, control.value|| " ");
           }
         }
       }
@@ -115,7 +113,7 @@ export class ProfileComponent {
   onFileSelected(event: Event) {
     const fileInput = event.target as HTMLInputElement;
     this.form.markAsTouched();
-    if (fileInput.files) { 
+    if (fileInput.files) {
       if (fileInput.files.length > 0) {
         let selectedFile = fileInput.files[0];
         this.controls.picture.setValue(selectedFile);

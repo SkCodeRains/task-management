@@ -9,7 +9,7 @@ import { Itask } from '../components/interfaces/interface';
 export class RestService {
 
   // URL = "http://localhost:3000/"
-  URL = "https://task-management-shb7.vercel.app/"
+  URL = "http://localhost:3000/";
   headers = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -20,6 +20,7 @@ export class RestService {
   login(form: any): Observable<any> {
     return this.http.post<any>(`${this.URL}signin.ss`, form)
   }
+  
   signUp(form: any): Observable<any> {
     return this.http.post<any>(`${this.URL}signup.ss`, form)
   }

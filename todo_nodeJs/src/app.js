@@ -8,7 +8,7 @@ const auth = require('./middleware/auth');
 const taskRouter = require('./routes/taskRoutes');
 const fileUpload = require('express-fileupload');
 
-app.get("/",(req,res)=>{
+app.get("/", (req, res) => {
     res.send("Hello Dear How Are YOu ")
 })
 
@@ -17,7 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload());
 
-const whitelist = ['http://localhost:4200', "http://localhost:3000", 'http://192.168.180.12:4200', 'https://skcoderains.github.io']; // Array of allowed origins
+
+const whitelist = ['http://localhost:4200', "http://localhost:3000", 'http://192.168.180.12:4200', 'http://192.168.54.17:4200', 'https://skcoderains.github.io']; // Array of allowed origins
 const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
@@ -43,6 +44,6 @@ app.get("/test.ss", (req, res) => {
 
 
 
-mongoose.connect(process.env.MONGO_URI||"mongodb://localhost:27017/tasks_management_db").then(() => {
-    app.listen(process.env.PORT || 3000);
+mongoose.connect("mongodb://localhost:27017/tasks_management_db").then(() => {
+    app.listen(3000);
 });

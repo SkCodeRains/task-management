@@ -3,6 +3,8 @@ import { CommonService } from './rest.interceptor.service';
 import { IUser } from '../components/interfaces/interface';
 import { ToastrService } from 'ngx-toastr';
 import { NgxLoadingComponent } from 'ngx-loading';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +14,7 @@ export class TasksService {
   token = signal("");
 
   private _status = ["Off Track", "On Track", "Completed"];
-  
+
   toastContainer!: ToastrService;
 
 
@@ -29,7 +31,7 @@ export class TasksService {
     return this._status;
   }
 
-  constructor(private login: CommonService) {
+  constructor(private login: CommonService, private router: Router) {
     this.initZone();
   }
 
@@ -40,12 +42,10 @@ export class TasksService {
 
   initZone() {
     this.token = this.login.token;
-    let subs = this.login.event.subscribe({
+    this.login.event.pipe(takeUntilDestroyed()).subscribe({
       next: () => {
         this.token.set("");
-      },
-      complete: () => {
-        subs.unsubscribe();
+        this.router.navigate(["login"], { skipLocationChange: true })
       }
     })
   }
