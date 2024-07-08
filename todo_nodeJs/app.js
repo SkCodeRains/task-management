@@ -41,9 +41,6 @@ app.get("/test.ss", (req, res) => {
     res.send("Hello darling")
 })
 
+mongoose.connect(process.env.MONGO_URI).then((connection) => { });
 
-
-
-mongoose.connect(process.env.MONGO_URI).then((connection) => {
-    app.listen(process.env.PORT);
-});
+app.listen(process.env.PORT);
