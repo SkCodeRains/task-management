@@ -1,9 +1,9 @@
 {
   "name": "task-nodejs",
   "version": "1.0.0",
-  "main": "src/app.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon src/app.js --host 0.0.0.0"
+    "start": "node app.js --host 0.0.0.0"
   },
   "keywords": [],
   "author": "",

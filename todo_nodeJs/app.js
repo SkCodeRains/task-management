@@ -8,7 +8,7 @@ const auth = require('./src/middleware/auth');
 const taskRouter = require('./src/routes/taskRoutes');
 const fileUpload = require('express-fileupload');
 
-app.get("/", (req, res) => {
+app.get("", (req, res) => {
     res.send("Hello Dear How Are YOu ")
 })
 
@@ -44,6 +44,6 @@ app.get("/test.ss", (req, res) => {
 
 
 
-mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/tasks_management_db").then(() => {
+mongoose.connect(process.env.MONGO_URI).then((connection) => {
     app.listen(process.env.PORT);
 });
