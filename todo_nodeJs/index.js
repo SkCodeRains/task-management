@@ -41,6 +41,12 @@ app.get("/test.ss", (req, res) => {
     res.send("Hello darling")
 })
 
-mongoose.connect(process.env.MONGO_URI).then((connection) => { });
+try {
+    mongoose.connect(process.env.MONGO_URI).then((connection) => {
+        console.log("database connected");
+     });
+} catch (error) {
+    console.log("data not connect");
+}
 
 app.listen(process.env.PORT);
