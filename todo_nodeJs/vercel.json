@@ -2,7 +2,7 @@
     "version": 3,
     "builds": [
         {
-            "src": "sapp.js",
+            "src": "sindex.js",
             "use": "@vercel/node",
             "buildCommand": "npm run build" 
         }
