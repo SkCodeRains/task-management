@@ -2,10 +2,10 @@ require("dotenv").config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const userRouter = require('./routes/userRoutes');
+const userRouter = require('./src/routes/userRoutes');
 const { default: mongoose } = require('mongoose');
-const auth = require('./middleware/auth');
-const taskRouter = require('./routes/taskRoutes');
+const auth = require('./src/middleware/auth');
+const taskRouter = require('./src/routes/taskRoutes');
 const fileUpload = require('express-fileupload');
 
 app.get("/", (req, res) => {
@@ -44,6 +44,6 @@ app.get("/test.ss", (req, res) => {
 
 
 
-mongoose.connect("mongodb://localhost:27017/tasks_management_db").then(() => {
-    app.listen(3000);
+mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/tasks_management_db").then(() => {
+    app.listen(process.env.PORT);
 });
